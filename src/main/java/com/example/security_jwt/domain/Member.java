@@ -1,7 +1,8 @@
 package com.example.security_jwt.domain;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
@@ -12,18 +13,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table (name="member")
-@Data
-@Builder
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -37,13 +34,23 @@ public class Member {
     private String password;
 
     @Column(name="birth", nullable = false)
-    private Date birth;
+    private LocalDateTime birth;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Builder
+    public Member(String nickname, String email, String password, LocalDateTime birth, Role role, Gender gender) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.birth = birth;
+        this.role = role;
+        this.gender = gender;
+    }
 
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
