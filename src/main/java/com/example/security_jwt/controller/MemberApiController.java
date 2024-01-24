@@ -1,6 +1,7 @@
 package com.example.security_jwt.controller;
 
-
+import com.example.security_jwt.dto.MemberLoginReqDTO;
+import com.example.security_jwt.dto.MemberLoginResDTO;
 import com.example.security_jwt.dto.MemberSignUpReqDTO;
 import com.example.security_jwt.global.mesage.MessageResponse;
 import com.example.security_jwt.service.MemberService;
@@ -25,10 +26,14 @@ public class MemberApiController {
 
     @PostMapping("/signup") //회원가입
     public ResponseEntity<MessageResponse> signup(@RequestBody @Valid MemberSignUpReqDTO request){
-        Long joinMemberId = memberService.join(request);
+        memberService.join(request);
         return ResponseEntity.ok(new MessageResponse("회원가입 완료."));
     }
 
-        //로그인
+    @PostMapping("/login")  //로그인
+    public ResponseEntity<MessageResponse> login(@RequestBody MemberLoginReqDTO loginReqDTO){
+        MemberLoginResDTO loginResDTO = memberService.login(loginReqDTO.getEmail(), loginReqDTO.getPassword());
+        return ResponseEntity.ok(new MessageResponse("로그인 완료됨"));
+    }
 
 }
