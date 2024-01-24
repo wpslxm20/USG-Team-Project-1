@@ -10,8 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class MemberSignUpReqDTO {
 
     private String email;
@@ -19,6 +19,7 @@ public class MemberSignUpReqDTO {
     private String password;
     private LocalDateTime birth;
     private Gender gender;
+    private Boolean isCustomer;
 
     public Member toEntity() {
         return Member.builder()
