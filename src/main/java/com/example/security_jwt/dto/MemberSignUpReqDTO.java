@@ -1,10 +1,10 @@
 package com.example.security_jwt.dto;
 
-import java.sql.Date;
+
+import java.time.LocalDateTime;
 
 import com.example.security_jwt.domain.Gender;
 import com.example.security_jwt.domain.Member;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +13,11 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class MemberSignUpReqDTO {
-    
+
     private String email;
     private String nickname;
     private String password;
-    private Date birth;
+    private LocalDateTime birth;
     private Gender gender;
 
     public Member toEntity() {

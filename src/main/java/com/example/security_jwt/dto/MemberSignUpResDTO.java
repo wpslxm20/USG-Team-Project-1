@@ -1,6 +1,6 @@
 package com.example.security_jwt.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.example.security_jwt.domain.Gender;
 import com.example.security_jwt.domain.Member;
@@ -9,11 +9,12 @@ import lombok.Data;
 
 @Data
 public class MemberSignUpResDTO {
+
     private Long id;
     private String email;
     private String nickname;
     private String password;
-    private Date birth;
+    private LocalDateTime birth;
     private Gender gender;
 
     public MemberSignUpResDTO(Member member){
