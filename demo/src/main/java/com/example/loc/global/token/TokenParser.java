@@ -19,7 +19,7 @@ public class TokenParser {
     private final Key key;
 
     @Autowired
-    public TokenParser(@Value("${jwt.token.secret-key}") String secretKey) {
+    public TokenParser(@Value("${jwt.secret.key}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
