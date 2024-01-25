@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class MemberLoginResDTO {
-    private String login;
-    private String password;
+    private String accessToken;
+    private String refreshToken;
     private Role role;
 }
