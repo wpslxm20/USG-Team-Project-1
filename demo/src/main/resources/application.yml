@@ -1,35 +1,36 @@
-# spring:
-#   datasource:
-#     url: jdbc:mysql://localhost:3307/loc
-#     username: loc
-#     password: 1234
-
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/loc
+    username: loc
+    password: 1234
+  jpa:
+      show-sql: true
+      properties:
+        hibernate:
+          default_batch_fetch_size: 1000
+      hibernate:
+        ddl-auto: update
 # 포트 변경
 server:
   port: 8081
 
-# H2 db 연결 정보
-spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+# # H2 db 연결 정보
+# spring:
+#   datasource:
+#     url: jdbc:h2:mem:testdb
+#     username: sa
+#     password:
+#     driver-class-name: org.h2.Driver
 
-# H2 콘솔 활성화
-  h2:
-    console:
-        enabled: true
+# # H2 콘솔 활성화
+#   h2:
+#     console:
+#         enabled: true
 
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        default_batch_fetch_size: 1000
-    hibernate:
-      ddl-auto: update
-
-# jwt.secret.key의 값은 256bit 이상이어야 합니다.
-jwt:
-  secret:
-    key: 45dbbb4dc7b40cfadf38ca22f8a97635b5b9ea41bb155d31ddc7f32feb36092a6c13b6459bc5ef30b89c77e2fe5c962cc0deba3a328abb39af699381b9a5851
+  # jpa:
+  #   show-sql: true
+  #   properties:
+  #     hibernate:
+  #       default_batch_fetch_size: 1000
+  #   hibernate:
+  #     ddl-auto: update
