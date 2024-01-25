@@ -1,0 +1,50 @@
+jwt:
+  token:
+    secret-key: ${SECRET_KEY}
+
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/board
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+  profiles: default
+  cloud:
+    gateway:
+      #<<< API Gateway / Routes
+      routes:
+        - id: Member
+          uri: http://localhost:8082
+          predicates:
+            - Path=/member/**,
+        - id: location
+          uri: http://localhost:8083
+          predicates:
+            - Path=/location/**,
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+      #>>> API Gateway / Routes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
