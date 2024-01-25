@@ -1,5 +1,6 @@
 package com.example.security_jwt.security;
 
+import com.example.security_jwt.domain.Role;
 import com.example.security_jwt.security.token.TokenProvider;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -51,14 +52,16 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createAccessToken(String userid) {
+    public String createAccessToken(String userid, Role role) {
         Map<String, Object> claim = new HashMap<>();
+        claim.put("role", role.name()); // 사용자 Role
         claim.put("userid", userid);  //사용자 ID
         return createJwt("ACCESS_TOKEN", ACCESS_TOKEN_EXPIRATION_TIME, claim);
     }
     @Override
-    public String createRefreshToken(String userid){
+    public String createRefreshToken(String userid, Role role){
         HashMap<String, Object> claim = new HashMap<>();
+        claim.put("role", role);
         claim.put("userid", userid);
         String refreshToken = createJwt("REFRESH_TOKEN", REFRESH_TOKEN_EXPIRATION_TIME, claim);
         return refreshToken;

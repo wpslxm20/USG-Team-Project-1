@@ -62,6 +62,7 @@ public class MemberServiceImpl implements MemberService{
         Member savedMember = memberRepository.save(member);
         return savedMember.getId();
     }
+
     @Override
     public MemberLoginResDTO regenerateToken(RefreshTokenReq refreshTokenReq){
         String refreshToken = refreshTokenReq.getRefreshToken();
@@ -71,6 +72,7 @@ public class MemberServiceImpl implements MemberService{
         }
 
         String userid = (String) jwtTokenProvider.get(refreshToken).get("userid");
+        Role role = (Role) jwtTokenProvider.get(refreshToken).get("role");
 
         Member findMember = memberRepository.findByEmail(userid).orElseThrow(
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
@@ -81,15 +83,16 @@ public class MemberServiceImpl implements MemberService{
             throw new IllegalArgumentException("토큰이 맞지 않음.");
         }
 
-        String newRefreshToken = jwtTokenProvider.createRefreshToken(userid);
+        String newRefreshToken = jwtTokenProvider.createRefreshToken(userid,role);
+
         MemberLoginResDTO memberLoginResDTO = MemberLoginResDTO.builder()
                 .refreshToken(newRefreshToken)
-                .accessToken(jwtTokenProvider.createAccessToken(userid))
-                .role(findMember.getRole())
+                .accessToken(jwtTokenProvider.createAccessToken(userid,role))
                 .build();
 
         return memberLoginResDTO;
     }
+
     @Override
     public MemberLoginResDTO login(String email, String password){
         //Id 검증
@@ -101,13 +104,12 @@ public class MemberServiceImpl implements MemberService{
             throw new IllegalArgumentException("비밀번호가 잘못되었습니다.");
         }
 
-        String acessToken = jwtTokenProvider.createAccessToken(findMember.getEmail());
-        String refreshToken = jwtTokenProvider.createRefreshToken(findMember.getEmail());
+        String acessToken = jwtTokenProvider.createAccessToken(findMember.getEmail(), findMember.getRole());
+        String refreshToken = jwtTokenProvider.createRefreshToken(findMember.getEmail(), findMember.getRole());
 
         return MemberLoginResDTO.builder()
                 .accessToken(acessToken)
                 .refreshToken(refreshToken)
-                .role(findMember.getRole())
                 .build();
     }
 }
