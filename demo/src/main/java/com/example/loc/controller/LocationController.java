@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @Slf4j // log 사용할 수 있게 해주는 거
-@RequestMapping("/api")
+@RequestMapping("/api/location")
 public class LocationController {
 
     private final LocationService locationService;

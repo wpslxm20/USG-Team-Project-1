@@ -7,7 +7,7 @@ import lombok.*;
 
 
 @Entity
-@Data
+@Getter
 @Table (name="location_info")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
@@ -34,16 +34,17 @@ public class Location {
 
     // Location DB와 Member DB는 다대1 관계
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "owner_id")
     private Member member;
 
     @Builder
-    public Location(String name, String comment, String phone, String addr, Type type) {
+    public Location(String name, String comment, String phone, String addr, Type type, Member member) {
         this.name = name;
         this.comment = comment;
         this.phone = phone;
         this.addr = addr;
         this.type = type;
+        this.member = member;
     }
 }
 

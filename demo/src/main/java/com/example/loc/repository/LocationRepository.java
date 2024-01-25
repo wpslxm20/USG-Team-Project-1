@@ -10,4 +10,6 @@ public interface LocationRepository extends JpaRepository<Location, Long>{
 
     // DB에 있는 데이터중 주소와 name이 같은 것을 찾기
     Optional<Location> findByAddrAndName(String addr, String name);
+
+    
 }

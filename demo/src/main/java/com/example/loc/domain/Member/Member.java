@@ -1,6 +1,6 @@
 package com.example.loc.domain.Member;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.*;
@@ -30,7 +30,7 @@ public class Member {
     private String password;
 
     @Column(name="birth", nullable = false)
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -43,7 +43,7 @@ public class Member {
     private List<Location> locations;
 
     @Builder
-    public Member(String nickname, String email, String password, LocalDateTime birth, Role role, Gender gender) {
+    public Member(String nickname, String email, String password, LocalDate birth, Role role, Gender gender) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
