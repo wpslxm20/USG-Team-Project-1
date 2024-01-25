@@ -1,10 +1,16 @@
 package com.example.loc.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.loc.domain.Location.Location;
+import com.example.loc.domain.Member.Member;
+import com.example.loc.dto.HomeInfoReqDTO;
+import com.example.loc.dto.HomeInfoResDTO;
 import com.example.loc.dto.RegistInfoReqDTO;
 import com.example.loc.repository.LocationRepository;
+import com.example.loc.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +21,34 @@ import lombok.RequiredArgsConstructor;
 public class LocationServiceImple implements LocationService{
 
     private final LocationRepository locationRepository;
+    private final MemberRepository memberRepository;
 
+    // 홈페이지
+    @Override
+    @Transactional // 서버가 송수신하다 갑자기 꺼지는 상태 방지
+    public Long home(HomeInfoReqDTO request, HomeInfoResDTO response) {
+        return null;
+    }
+
+    // 등록
     @Override
     @Transactional
     public Long reg(RegistInfoReqDTO regDTO) {
-        // 일단, DB에 같은 장소가 존재하면 안되고
-        // 두 번째로 이거 하면서 생각난건데, 
+
+        // 일단, DB에 같은 장소와 Name이 존재하면 안되고
         if (locationRepository.findByAddrAndName(regDTO.getAddr(),regDTO.getName()).isPresent()) {
             throw new Error("이미 존재하는 매장입니다.");
         }
 
-        Long owner_id = regDTO.getOwner_id();
+        // memberID를 통해서 받아온 데이터의 id가 존재하는지 확인하는 것
+        Optional<Member> memberCheck = memberRepository.findById(regDTO.getMemberId());
+
+        if (memberCheck.isEmpty()) {
+            // 어짜피 프론트에서 제대로 처리했으면, 이 메시지는 뜨지 않을 것임
+            throw new Error("회원정보가 존재하지 않습니다.");    
+        }
+
+        Member member = memberCheck.get();
 
         Location location = Location.builder()
             .name(regDTO.getName())
@@ -33,10 +56,19 @@ public class LocationServiceImple implements LocationService{
             .comment(regDTO.getComment())
             .addr(regDTO.getAddr())
             .type(regDTO.getType())
+            .member(member)
             .build();
 
         Location savedLoc = locationRepository.save(location);
         return savedLoc.getId();
     }
+
+    // 삭제
+
+    // 수정
+
+    // 조회
+
+    
     
 }
