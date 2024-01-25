@@ -1,61 +1,54 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-
+import React, { useEffect, useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
+import axios from 'axios';
 const Main = () => {
-    const [data, setDate] = useState( {
-        name: '', // 이름
-        score: '', // 평점
-        comment: '', // 코멘트
-        addr: '', // 가볍게 주소 4개 데이터 보여주기
-    });
+    const [data, setData] = useState([]); // 데이터를 저장할 상태
 
-    const handleSubmit = (e) => { // 데이터 전송 (프론트 -> 백)
-        e.preventDefault();
-
-        try {
-            const response = fetch('http://localhost:8080/myendpoint', {
-                method: 'POST', // POST 요청 전송
-                headers: {
-                    'Content-Type': 'application/json', // JSON 형태 데이터 전송
-                },
-                body: JSON.stringify(data), // 데이터를 JSON 문자여로 변환
-            });
-        
-            // 전송 실패
-            if (!response.ok) {
-                throw new Error('연결 오류');
-            }
-
-            // 성공적
-            console.log('전송 성공');
-        } catch (error) {
-            // 요청 중 에러 발생
-            console.error('Error sending data:', error.message);
-        }
+  useEffect(() => {
+    // 서버에서 데이터를 가져오는 비동기 함수 (axios 또는 fetch 등 사용)
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://localhost:8081/api/location/home'); 
+        const result = response.data;
+        setData(result.data); // 데이터를 상태에 설정
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
-    // 이 페이지는 DB에서 받아와야 하네..
-    // 1. DB에서 데이터를 받아서 DTO 객체에 저장해서 전송
-    // 2. 받아온 데이터를 통해 삽입
-    return (
-        <form onSubmit={handleSubmit}>
-        <Table border='1'>
-            <TableHead >
-                <TableCell colSpan="4">명소</TableCell>
-            </TableHead>
-            <TableBody>
-                <TableRow>
-                    <TableCell>엥</TableCell>
-                    <TableCell>엥</TableCell>
-                    <TableCell>엥</TableCell>
-                    <TableCell>엥</TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-        </form>
-    );
+    fetchData(); // 데이터를 가져오는 함수 호출
+
+  }, []); // 빈 배열을 전달하면 컴포넌트가 마운트될 때 한 번만 실행
+
+  if (!data) {
+    return <div>Loading...</div> // 데이터를 받을 때까지 로딩 표시
+  }
+
+  return (
+    <Table border='1'>
+    <TableHead>
+      <TableRow>
+        <TableCell colSpan="4">명소</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Name</TableCell>
+        <TableCell>ID</TableCell>
+        <TableCell>Comment</TableCell>
+        <TableCell>Additional Cell</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {data.map(item => (
+        <TableRow key={item.id}>
+          <TableCell>{item.name}</TableCell>
+          <TableCell>{item.id}</TableCell>
+          <TableCell>{item.comment || 'No comment'}</TableCell>
+          <TableCell>Additional Data</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+  );
 } 
-
-
 
 export default Main;

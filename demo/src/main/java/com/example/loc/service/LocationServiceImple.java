@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.loc.domain.Location.Location;
 import com.example.loc.domain.Member.Member;
+import com.example.loc.dto.HomeInfoReqDTO;
+import com.example.loc.dto.HomeInfoResDTO;
 import com.example.loc.dto.RegistInfoReqDTO;
 import com.example.loc.repository.LocationRepository;
 import com.example.loc.repository.MemberRepository;
@@ -21,6 +23,14 @@ public class LocationServiceImple implements LocationService{
     private final LocationRepository locationRepository;
     private final MemberRepository memberRepository;
 
+    // 홈페이지
+    @Override
+    @Transactional // 서버가 송수신하다 갑자기 꺼지는 상태 방지
+    public Long home(HomeInfoReqDTO request, HomeInfoResDTO response) {
+        return null;
+    }
+
+    // 등록
     @Override
     @Transactional
     public Long reg(RegistInfoReqDTO regDTO) {
@@ -52,5 +62,13 @@ public class LocationServiceImple implements LocationService{
         Location savedLoc = locationRepository.save(location);
         return savedLoc.getId();
     }
+
+    // 삭제
+
+    // 수정
+
+    // 조회
+
+    
     
 }

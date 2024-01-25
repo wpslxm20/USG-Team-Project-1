@@ -38,7 +38,8 @@ public class Location {
     private Member member;
 
     @Builder
-    public Location(String name, String comment, String phone, String addr, Type type, Member member) {
+    public Location(Long id, String name, String comment, String phone, String addr, Type type, Member member) {
+        this.id = id;
         this.name = name;
         this.comment = comment;
         this.phone = phone;
