@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ModifyReqDTO {
+public class MemberModifyReqDTO {
     private String email;
     private String nickname;
     private String password;
