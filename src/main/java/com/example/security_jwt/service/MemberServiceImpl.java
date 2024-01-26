@@ -1,10 +1,14 @@
 package com.example.security_jwt.service;
 
 import com.example.security_jwt.domain.Member.Role;
+import com.example.security_jwt.domain.Mypage.Mypage;
 import com.example.security_jwt.dto.*;
 import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
-import com.example.security_jwt.dto.Mypage.ModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MypageReqDTO;
+import com.example.security_jwt.dto.Mypage.MypageResDTO;
+import com.example.security_jwt.repository.MypageRepository;
 import com.example.security_jwt.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +20,10 @@ import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 @Transactional
@@ -23,6 +31,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final MypageRepository mypageRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
@@ -112,25 +121,70 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void modifyMember(ModifyReqDTO modifyReqDTO){
-        Member findMember = memberRepository.findByEmail(modifyReqDTO.getEmail()).orElseThrow(
+    public void modifyMember(MemberModifyReqDTO memberModifyReqDTO){
+        Member findMember = memberRepository.findByEmail(memberModifyReqDTO.getEmail()).orElseThrow(
                 () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
         );
 
-        if (modifyReqDTO.getNickname() != null) {
-            findMember.ModifyNickName(modifyReqDTO.getNickname());
+        if (memberModifyReqDTO.getNickname() != null) {
+            findMember.ModifyNickName(memberModifyReqDTO.getNickname());
         }
-        if (modifyReqDTO.getPassword() != null) {
-            findMember.ModifyPassword(passwordEncoder.encode(modifyReqDTO.getPassword()));
+        if (memberModifyReqDTO.getPassword() != null) {
+            findMember.ModifyPassword(passwordEncoder.encode(memberModifyReqDTO.getPassword()));
         }
-        if (modifyReqDTO.getGender() != null){
-            findMember.ModifyGender(modifyReqDTO.getGender());
+        if (memberModifyReqDTO.getGender() != null){
+            findMember.ModifyGender(memberModifyReqDTO.getGender());
         }
-        if (modifyReqDTO.getBirth() != null){
-            findMember.ModifyBirth(modifyReqDTO.getBirth());
+        if (memberModifyReqDTO.getBirth() != null){
+            findMember.ModifyBirth(memberModifyReqDTO.getBirth());
         }
         // 기타 필드들에 대한 업데이트 로직 추가...
 
         memberRepository.save(findMember);
+    }
+    @Override
+    public List<MypageResDTO> GetReview(MypageReqDTO reqDTO){
+        List<Mypage> mypages = mypageRepository.findByEmail(reqDTO.getEmail());
+
+        if (mypages.isEmpty()) {
+            throw new IllegalArgumentException("리뷰 정보를 찾을 수 없습니다.");
+        }
+
+        List<MypageResDTO> resDTOs = new ArrayList<>();
+        for (Mypage mypage : mypages) {
+            MypageResDTO resDTO = MypageResDTO.builder()
+                    .email(mypage.getEmail())
+                    .store_name(mypage.getStorename())
+                    .address(mypage.getAddress())
+                    .content(mypage.getContent())
+                    .rating(mypage.getRating())
+                    .date(mypage.getDate())
+                    .review(mypage.getReview())
+                    .build();
+            resDTOs.add(resDTO);
+        }
+
+        return resDTOs;
+    }
+
+
+    @Override
+    public List<MypageResDTO> GetLike(MypageReqDTO reqDTO){
+        List<Mypage> mypages = mypageRepository.findByEmail(reqDTO.getEmail());
+
+        if (mypages.isEmpty()) {
+            throw new IllegalArgumentException("리뷰 정보를 찾을 수 없습니다.");
+        }
+        List<MypageResDTO> resDTOs = new ArrayList<>();
+        for (Mypage mypage : mypages) {
+            MypageResDTO resDTO = MypageResDTO.builder()
+                    .store_name(mypage.getStorename())
+                    .address(mypage.getAddress())
+                    .rating(mypage.getRating())
+                    .date(mypage.getDate())
+                    .content(mypage.getContent())
+                    .build();
+        }
+        return resDTOs;
     }
 }

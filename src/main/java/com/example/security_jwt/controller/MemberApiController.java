@@ -1,18 +1,24 @@
 package com.example.security_jwt.controller;
 
+import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.dto.*;
 import com.example.security_jwt.dto.Member.MemberLoginReqDTO;
 import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
-import com.example.security_jwt.dto.Mypage.ModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MypageReqDTO;
+import com.example.security_jwt.dto.Mypage.MypageResDTO;
 import com.example.security_jwt.global.mesage.MessageResponse;
+import com.example.security_jwt.security.context.MemberContext;
 import com.example.security_jwt.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -44,8 +50,20 @@ public class MemberApiController {
 
 
     @PutMapping("customer/mypage/modify")
-    public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid ModifyReqDTO modifyReqDTO) {
-        memberService.modifyMember(modifyReqDTO);
-        return ResponseEntity.ok(new MessageResponse(modifyReqDTO,"회원정보가 수정되었습니다."));
+    public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid MemberModifyReqDTO memberModifyReqDTO) {
+        memberService.modifyMember(memberModifyReqDTO);
+        return ResponseEntity.ok(new MessageResponse(memberModifyReqDTO,"회원정보가 수정되었습니다."));
+    }
+
+    @GetMapping("customer/mypage/like")
+    public ResponseEntity<MessageResponse> GetLike(@RequestBody @Valid MypageReqDTO reqDTO) {
+        List<MypageResDTO> mypageResDTO = memberService.GetLike(reqDTO);
+        return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 관심 정보 확인"));
+    }
+
+    @GetMapping("customer/mypage/review")
+    public ResponseEntity<MessageResponse> GetReview(@RequestBody @Valid MypageReqDTO reqDTO) {
+        List<MypageResDTO> mypageResDTO = memberService.GetReview(reqDTO);
+        return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 리뷰 정보 확인"));
     }
 }
