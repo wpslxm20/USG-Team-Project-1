@@ -1,6 +1,6 @@
 package com.example.security_jwt.security.token;
 
-import com.example.security_jwt.domain.Role;
+import com.example.security_jwt.domain.Member.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 

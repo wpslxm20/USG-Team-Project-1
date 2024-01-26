@@ -1,9 +1,10 @@
 package com.example.security_jwt.service;
 
-import com.example.security_jwt.domain.Role;
-import com.example.security_jwt.dto.MemberLoginReqDTO;
-import com.example.security_jwt.dto.MemberLoginResDTO;
-import com.example.security_jwt.dto.RefreshTokenReq;
+import com.example.security_jwt.domain.Member.Role;
+import com.example.security_jwt.dto.*;
+import com.example.security_jwt.dto.Member.MemberLoginResDTO;
+import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
+import com.example.security_jwt.dto.Mypage.ModifyReqDTO;
 import com.example.security_jwt.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.security_jwt.domain.Member;
-import com.example.security_jwt.dto.MemberSignUpReqDTO;
+import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -111,5 +109,28 @@ public class MemberServiceImpl implements MemberService{
                 .accessToken(acessToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    @Override
+    public void modifyMember(ModifyReqDTO modifyReqDTO){
+        Member findMember = memberRepository.findByEmail(modifyReqDTO.getEmail()).orElseThrow(
+                () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
+        );
+
+        if (modifyReqDTO.getNickname() != null) {
+            findMember.ModifyNickName(modifyReqDTO.getNickname());
+        }
+        if (modifyReqDTO.getPassword() != null) {
+            findMember.ModifyPassword(passwordEncoder.encode(modifyReqDTO.getPassword()));
+        }
+        if (modifyReqDTO.getGender() != null){
+            findMember.ModifyGender(modifyReqDTO.getGender());
+        }
+        if (modifyReqDTO.getBirth() != null){
+            findMember.ModifyBirth(modifyReqDTO.getBirth());
+        }
+        // 기타 필드들에 대한 업데이트 로직 추가...
+
+        memberRepository.save(findMember);
     }
 }

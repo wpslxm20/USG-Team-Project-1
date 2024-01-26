@@ -1,6 +1,5 @@
-package com.example.security_jwt.dto;
+package com.example.security_jwt.dto.Member;
 
-import com.example.security_jwt.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

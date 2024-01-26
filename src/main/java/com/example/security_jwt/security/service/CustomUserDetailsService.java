@@ -1,6 +1,6 @@
 package com.example.security_jwt.security.service;
 
-import com.example.security_jwt.domain.Member;
+import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
 import com.example.security_jwt.security.context.MemberContext;
 import lombok.RequiredArgsConstructor;

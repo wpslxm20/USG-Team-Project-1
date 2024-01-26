@@ -1,4 +1,4 @@
-package com.example.security_jwt.domain;
+package com.example.security_jwt.domain.Member;
 
 import java.time.LocalDateTime;
 
@@ -55,4 +55,8 @@ public class Member {
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
+    public void ModifyNickName(String nickname) { this.nickname = nickname; }
+    public void ModifyPassword(String password) { this.password = password; }
+    public void ModifyBirth(LocalDateTime birth) { this.birth = birth; }
+    public void ModifyGender(Gender gender) { this.gender = gender; }
 }

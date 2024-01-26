@@ -1,9 +1,9 @@
-package com.example.security_jwt.dto;
+package com.example.security_jwt.dto.Member;
 
 import java.time.LocalDateTime;
 
-import com.example.security_jwt.domain.Gender;
-import com.example.security_jwt.domain.Member;
+import com.example.security_jwt.domain.Member.Gender;
+import com.example.security_jwt.domain.Member.Member;
 
 import lombok.Data;
 

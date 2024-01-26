@@ -1,4 +1,4 @@
-package com.example.security_jwt.dto;
+package com.example.security_jwt.dto.Member;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
