@@ -1,13 +1,10 @@
 package com.example.loc.repository;
 
-import java.util.Optional;
-
+import com.example.loc.domain.Member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.loc.domain.Member.Member;
+import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long>{
-    
-    // Id(Unique) -> 하나의 Member만 반환
-    Optional<Member> findById(Long id);
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    Optional<Member> findByEmail(String email);
 }
