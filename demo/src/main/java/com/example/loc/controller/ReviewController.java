@@ -3,16 +3,14 @@ package com.example.loc.controller;
 import com.example.loc.domain.Member.Member;
 import com.example.loc.dto.MyReviewResDTO;
 import com.example.loc.dto.SaveReviewReqDTO;
+import com.example.loc.dto.UpdateReviewReqDTO;
 import com.example.loc.global.message.MessageResponse;
 import com.example.loc.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -37,5 +35,14 @@ public class ReviewController {
         MyReviewResDTO myReviewResDTO = reviewService.getMyReview(loginMember.getId());
 
         return ResponseEntity.ok(new MessageResponse(myReviewResDTO, "리뷰 목록 반환 완료"));
+    }
+
+    @PutMapping("/api/review")
+    public ResponseEntity<MessageResponse> updateReview(@RequestBody UpdateReviewReqDTO reviewRequest,
+                                                        HttpServletRequest request) {
+        Member loginMember = loginMemberGetter.getLoginMember(request.getHeader("Authorization"));
+        Long updateReviewId = reviewService.updateReview(reviewRequest, loginMember.getId());
+
+        return ResponseEntity.ok(new MessageResponse(updateReviewId, "리뷰 수정 완료"));
     }
 }
