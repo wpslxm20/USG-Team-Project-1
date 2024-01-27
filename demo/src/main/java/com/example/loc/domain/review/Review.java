@@ -37,4 +37,9 @@ public class Review {
         this.member = member;
         this.location = location;
     }
+
+    public void updateReview(String review, Double grade) {
+        this.review = review;
+        this.grade = grade;
+    }
 }

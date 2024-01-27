@@ -6,6 +6,7 @@ import com.example.loc.domain.review.Review;
 import com.example.loc.dto.MyReviewDTO;
 import com.example.loc.dto.MyReviewResDTO;
 import com.example.loc.dto.SaveReviewReqDTO;
+import com.example.loc.dto.UpdateReviewReqDTO;
 import com.example.loc.repository.LocationRepository;
 import com.example.loc.repository.MemberRepository;
 import com.example.loc.repository.ReviewRepository;
@@ -29,6 +30,7 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
+    @Transactional
     public Long saveReview(SaveReviewReqDTO request) {
         Member findMember = memberRepository.findById(request.getMemberId()).orElseThrow(
                 () -> new IllegalArgumentException("Member Not Exist")
@@ -51,6 +53,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    @Transactional
     public MyReviewResDTO getMyReview(Long memberId) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(
                 () -> new IllegalArgumentException("Member Not Exist")
@@ -71,5 +74,24 @@ public class ReviewServiceImpl implements ReviewService{
         }
 
         return new MyReviewResDTO(myReviewDTOList, myReviewDTOList.size());
+    }
+
+    @Override
+    @Transactional
+    public Long updateReview(UpdateReviewReqDTO request, Long memberId) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(
+                () -> new IllegalArgumentException("Member Not Exist")
+        );
+
+        Review findReview = reviewRepository.findById(request.getReviewId()).orElseThrow(
+                () -> new IllegalArgumentException("Review Not Exist")
+        );
+
+        if (findMember.getId().equals(findReview.getMember().getId())) {
+            findReview.updateReview(request.getReview(), request.getGrade());
+            return findReview.getId();
+        } else {
+            throw new IllegalArgumentException("리뷰 작성자와 일치하지 않습니다.");
+        }
     }
 }
