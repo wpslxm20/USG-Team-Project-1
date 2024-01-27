@@ -29,6 +29,7 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
+    @Transactional
     public Long saveReview(SaveReviewReqDTO request) {
         Member findMember = memberRepository.findById(request.getMemberId()).orElseThrow(
                 () -> new IllegalArgumentException("Member Not Exist")
@@ -51,6 +52,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    @Transactional
     public MyReviewResDTO getMyReview(Long memberId) {
         Member findMember = memberRepository.findById(memberId).orElseThrow(
                 () -> new IllegalArgumentException("Member Not Exist")
