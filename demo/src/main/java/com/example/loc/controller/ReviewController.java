@@ -6,6 +6,7 @@ import com.example.loc.dto.SaveReviewReqDTO;
 import com.example.loc.dto.UpdateReviewReqDTO;
 import com.example.loc.global.message.MessageResponse;
 import com.example.loc.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class ReviewController {
     private final LoginMemberGetter loginMemberGetter;
 
     @PostMapping("/api/review")
+    @Operation(summary = "리뷰 저장 *")
     public ResponseEntity<MessageResponse> saveReview(@RequestBody SaveReviewReqDTO request) {
 
         Long savedReviewId = reviewService.saveReview(request);
@@ -29,6 +31,7 @@ public class ReviewController {
     }
 
     @GetMapping("/api/review")
+    @Operation(summary = "내 리뷰 조회 *")
     public ResponseEntity<MessageResponse> getMyReview(HttpServletRequest request) {
 
         Member loginMember = loginMemberGetter.getLoginMember(request.getHeader("Authorization"));
@@ -38,6 +41,7 @@ public class ReviewController {
     }
 
     @PutMapping("/api/review")
+    @Operation(summary = "내 리뷰 수정 *")
     public ResponseEntity<MessageResponse> updateReview(@RequestBody UpdateReviewReqDTO reviewRequest,
                                                         HttpServletRequest request) {
         Member loginMember = loginMemberGetter.getLoginMember(request.getHeader("Authorization"));
