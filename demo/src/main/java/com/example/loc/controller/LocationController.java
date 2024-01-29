@@ -1,11 +1,8 @@
 package com.example.loc.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.springframework.http.RequestEntity;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
