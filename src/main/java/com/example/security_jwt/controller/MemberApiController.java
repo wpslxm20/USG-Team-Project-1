@@ -49,19 +49,19 @@ public class MemberApiController {
     }
 
 
-    @PutMapping("customer/mypage/modify")
+    @PutMapping("mypage/modify")    //수정
     public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid MemberModifyReqDTO memberModifyReqDTO) {
         memberService.modifyMember(memberModifyReqDTO);
         return ResponseEntity.ok(new MessageResponse(memberModifyReqDTO,"회원정보가 수정되었습니다."));
     }
 
-    @GetMapping("customer/mypage/like")
+    @GetMapping("mypage/like")      //관심목록
     public ResponseEntity<MessageResponse> GetLike(@RequestBody @Valid MypageReqDTO reqDTO) {
         List<MypageResDTO> mypageResDTO = memberService.GetLike(reqDTO);
         return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 관심 정보 확인"));
     }
 
-    @GetMapping("customer/mypage/review")
+    @GetMapping("mypage/review")    //리뷰 확인
     public ResponseEntity<MessageResponse> GetReview(@RequestBody @Valid MypageReqDTO reqDTO) {
         List<MypageResDTO> mypageResDTO = memberService.GetReview(reqDTO);
         return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 리뷰 정보 확인"));

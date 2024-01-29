@@ -156,7 +156,7 @@ public class MemberServiceImpl implements MemberService{
                     .email(mypage.getEmail())
                     .store_name(mypage.getStorename())
                     .address(mypage.getAddress())
-                    .content(mypage.getContent())
+                    .type(mypage.getType())
                     .rating(mypage.getRating())
                     .date(mypage.getDate())
                     .review(mypage.getReview())
@@ -182,7 +182,7 @@ public class MemberServiceImpl implements MemberService{
                     .address(mypage.getAddress())
                     .rating(mypage.getRating())
                     .date(mypage.getDate())
-                    .content(mypage.getContent())
+                    .type(mypage.getType())
                     .build();
         }
         return resDTOs;

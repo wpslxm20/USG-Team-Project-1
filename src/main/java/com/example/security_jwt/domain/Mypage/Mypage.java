@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table (name="mypage")
+@Table (name="mypage    ")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Mypage {
     @Id
@@ -17,11 +17,11 @@ public class Mypage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-    private String Storename;
-    private String address;
-    private String content; //업종
-    private String rating;
-    private LocalDateTime date;
-    private String review;
+    private String email;   //아이디
+    private String Storename;   //업장 이름
+    private String address; //주소
+    private String type; //업종
+    private String rating;  //평점
+    private LocalDateTime date; //날짜
+    private String review;  //리뷰내용
 }

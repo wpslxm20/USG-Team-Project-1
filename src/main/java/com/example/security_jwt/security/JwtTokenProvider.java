@@ -64,6 +64,7 @@ public class JwtTokenProvider implements TokenProvider {
         claim.put("role", role);
         claim.put("userid", userid);
         String refreshToken = createJwt("REFRESH_TOKEN", REFRESH_TOKEN_EXPIRATION_TIME, claim);
+        saveRefreshTokenInRedis(userid, refreshToken);
         return refreshToken;
     }
 
