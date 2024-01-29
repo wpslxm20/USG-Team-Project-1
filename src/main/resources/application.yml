@@ -15,5 +15,5 @@ spring:
 # jwt.secret.key의 값은 256bit 이상이어야 합니다.
 jwt:
   secret:
-    key: 45dbbb4dc7b40cfadf38ca22f8a97635b5b9ea41bb155d31ddc7f32feb36092a6c13b6459bc5ef30b89c77e2fe5c962cc0deba3a328abb39af699381b9a5851
+    key: ${SECRET_KEY}
     token-validity-in-seconds: 86400	# 초
