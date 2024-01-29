@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table (name="mypage    ")
+@Table (name="mypage")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Mypage {
     @Id
