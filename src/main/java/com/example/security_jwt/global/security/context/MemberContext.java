@@ -1,4 +1,4 @@
-package com.example.security_jwt.security.context;
+package com.example.security_jwt.global.security.context;
 
 import com.example.security_jwt.domain.Member.Member;
 import org.springframework.security.core.GrantedAuthority;

@@ -3,8 +3,6 @@ package com.example.security_jwt.domain.Member;
 import java.time.LocalDateTime;
 
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -51,12 +49,7 @@ public class Member {
         this.role = role;
         this.gender = gender;
     }
-
-    public void passwordEncode(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(password);
-    }
     public void ModifyNickName(String nickname) { this.nickname = nickname; }
-    public void ModifyPassword(String password) { this.password = password; }
     public void ModifyBirth(LocalDateTime birth) { this.birth = birth; }
     public void ModifyGender(Gender gender) { this.gender = gender; }
 }

@@ -1,7 +1,7 @@
-package com.example.security_jwt.security;
+package com.example.security_jwt.global.security;
 
 import com.example.security_jwt.domain.Member.Role;
-import com.example.security_jwt.security.token.TokenProvider;
+import com.example.security_jwt.global.security.token.TokenProvider;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

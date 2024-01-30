@@ -1,4 +1,4 @@
-package com.example.security_jwt.config;
+package com.example.security_jwt.global.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
