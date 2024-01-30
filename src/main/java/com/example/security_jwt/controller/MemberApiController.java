@@ -6,8 +6,6 @@ import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
 import com.example.security_jwt.dto.Mypage.MemberReqDTO;
 import com.example.security_jwt.dto.Mypage.MemberResDTO;
-import com.example.security_jwt.dto.Mypage.MypageReqDTO;
-import com.example.security_jwt.dto.Mypage.MypageResDTO;
 import com.example.security_jwt.global.mesage.MessageResponse;
 import com.example.security_jwt.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -45,7 +41,6 @@ public class MemberApiController {
     @Operation(summary = "토큰 재발행")
     public ResponseEntity<MessageResponse> regenerateToken(@RequestBody RefreshTokenReq refreshTokenReq){
         MemberLoginResDTO memberLoginResDTO = memberService.regenerateToken(refreshTokenReq);
-
         return ResponseEntity.ok(new MessageResponse(memberLoginResDTO, "refresh 토큰으로 access 토큰 재발행."));
     }
 
@@ -61,19 +56,5 @@ public class MemberApiController {
     public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid MemberReqDTO memberReqDTO) {
         memberService.modifyMember(memberReqDTO);
         return ResponseEntity.ok(new MessageResponse(memberReqDTO,"회원정보가 수정되었습니다."));
-    }
-
-    @GetMapping("api/mypage/like")      //관심목록
-    @Operation(summary = "관심 목록 조회 *")
-    public ResponseEntity<MessageResponse> GetLike(@RequestBody @Valid MypageReqDTO reqDTO) {
-        List<MypageResDTO> mypageResDTO = memberService.GetLike(reqDTO);
-        return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 관심 정보 확인"));
-    }
-
-    @GetMapping("api/mypage/review")    //리뷰 확인
-    @Operation(summary = "리뷰 조회 *")
-    public ResponseEntity<MessageResponse> GetReview(@RequestBody @Valid MypageReqDTO reqDTO) {
-        List<MypageResDTO> mypageResDTO = memberService.GetReview(reqDTO);
-        return ResponseEntity.ok(new MessageResponse(mypageResDTO, "회원 리뷰 정보 확인"));
     }
 }

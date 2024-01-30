@@ -1,16 +1,12 @@
 package com.example.security_jwt.service;
 
 import com.example.security_jwt.domain.Member.Role;
-import com.example.security_jwt.domain.Mypage.Mypage;
 import com.example.security_jwt.dto.*;
 import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
 import com.example.security_jwt.dto.Mypage.MemberReqDTO;
 import com.example.security_jwt.dto.Mypage.MemberResDTO;
-import com.example.security_jwt.dto.Mypage.MypageReqDTO;
-import com.example.security_jwt.dto.Mypage.MypageResDTO;
-import com.example.security_jwt.repository.MypageRepository;
-import com.example.security_jwt.security.JwtTokenProvider;
+import com.example.security_jwt.global.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +17,6 @@ import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @Service
 @Transactional
@@ -31,7 +24,6 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
-    private final MypageRepository mypageRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
@@ -71,6 +63,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    @Transactional
     public MemberLoginResDTO regenerateToken(RefreshTokenReq refreshTokenReq){
         String refreshToken = refreshTokenReq.getRefreshToken();
 
@@ -80,10 +73,6 @@ public class MemberServiceImpl implements MemberService{
 
         String userid = (String) jwtTokenProvider.get(refreshToken).get("userid");
         Role role = (Role) jwtTokenProvider.get(refreshToken).get("role");
-
-        Member findMember = memberRepository.findByEmail(userid).orElseThrow(
-                () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
-        );
 
         String findRefreshToken = redisTemplate.opsForValue().get(userid);
         if(!refreshToken.equals(findRefreshToken)){
@@ -101,6 +90,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    @Transactional
     public MemberLoginResDTO login(String email, String password){
         //Id 검증
         Member findMember = memberRepository.findByEmail(email).orElseThrow(
@@ -121,6 +111,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    @Transactional
     public void modifyMember(MemberReqDTO memberReqDTO){
         Member findMember = memberRepository.findByEmail(memberReqDTO.getEmail()).orElseThrow(
                 () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
@@ -129,20 +120,17 @@ public class MemberServiceImpl implements MemberService{
         if (memberReqDTO.getNickname() != null) {
             findMember.ModifyNickName(memberReqDTO.getNickname());
         }
-        if (memberReqDTO.getPassword() != null) {
-            findMember.ModifyPassword(passwordEncoder.encode(memberReqDTO.getPassword()));
-        }
         if (memberReqDTO.getGender() != null){
             findMember.ModifyGender(memberReqDTO.getGender());
         }
         if (memberReqDTO.getBirth() != null){
             findMember.ModifyBirth(memberReqDTO.getBirth());
         }
-        // 기타 필드들에 대한 업데이트 로직 추가...
 
         memberRepository.save(findMember);
     }
     @Override
+    @Transactional
     public MemberResDTO GetMember(MemberReqDTO memberReqDTO){
         Member findMember = memberRepository.findByEmail(memberReqDTO.getEmail()).orElseThrow(
                 () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
@@ -152,51 +140,5 @@ public class MemberServiceImpl implements MemberService{
                 .birth(findMember.getBirth())
                 .gender(findMember.getGender())
                 .build();
-    }
-    @Override
-    public List<MypageResDTO> GetReview(MypageReqDTO reqDTO){
-        List<Mypage> mypages = mypageRepository.findByEmail(reqDTO.getEmail());
-
-        if (mypages.isEmpty()) {
-            throw new IllegalArgumentException("리뷰 정보를 찾을 수 없습니다.");
-        }
-
-        List<MypageResDTO> resDTOs = new ArrayList<>();
-        for (Mypage mypage : mypages) {
-            MypageResDTO resDTO = MypageResDTO.builder()
-                    .email(mypage.getEmail())
-                    .store_name(mypage.getStorename())
-                    .address(mypage.getAddress())
-                    .type(mypage.getType())
-                    .rating(mypage.getRating())
-                    .date(mypage.getDate())
-                    .review(mypage.getReview())
-                    .build();
-            resDTOs.add(resDTO);
-        }
-
-        return resDTOs;
-    }
-
-
-    @Override
-    public List<MypageResDTO> GetLike(MypageReqDTO reqDTO){
-        List<Mypage> mypages = mypageRepository.findByEmail(reqDTO.getEmail());
-
-        if (mypages.isEmpty()) {
-            throw new IllegalArgumentException("리뷰 정보를 찾을 수 없습니다.");
-        }
-        List<MypageResDTO> resDTOs = new ArrayList<>();
-        for (Mypage mypage : mypages) {
-            MypageResDTO resDTO = MypageResDTO.builder()
-                    .store_name(mypage.getStorename())
-                    .address(mypage.getAddress())
-                    .rating(mypage.getRating())
-                    .date(mypage.getDate())
-                    .type(mypage.getType())
-                    .build();
-            resDTOs.add(resDTO);
-        }
-        return resDTOs;
     }
 }

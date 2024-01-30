@@ -1,8 +1,8 @@
-package com.example.security_jwt.security.service;
+package com.example.security_jwt.global.security.service;
 
 import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
-import com.example.security_jwt.security.context.MemberContext;
+import com.example.security_jwt.global.security.context.MemberContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

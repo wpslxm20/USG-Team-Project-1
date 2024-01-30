@@ -24,4 +24,5 @@ public class Mypage {
     private String rating;  //평점
     private LocalDateTime date; //날짜
     private String review;  //리뷰내용
+    private String image;   //이미지
 }

@@ -1,4 +1,4 @@
-package com.example.security_jwt.security.token;
+package com.example.security_jwt.global.security.token;
 
 import com.example.security_jwt.domain.Member.Role;
 import io.jsonwebtoken.Claims;
