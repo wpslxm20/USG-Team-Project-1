@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.loc.domain.Location.Location;
-import com.example.loc.dto.HomeInfoReqDTO;
+import com.example.loc.dto.HomeInfoDTO;
 
 public interface LocationRepository extends JpaRepository<Location, Long>{
 
@@ -16,7 +16,10 @@ public interface LocationRepository extends JpaRepository<Location, Long>{
     Optional<Location> findById(Long id);
 
     // id,name,comment 조회
-    List<HomeInfoReqDTO> findAllByIdNotNull();
+    List<HomeInfoDTO> findAllByIdNotNull();
+
+    // Location 모든정보 가져오기
+    List<Location> findAll();
 
     
 }

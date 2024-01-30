@@ -1,14 +1,23 @@
 package com.example.loc.service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import com.example.loc.domain.Location.Location;
+import com.example.loc.domain.Location.LocationImg;
 import com.example.loc.domain.Member.Member;
-import com.example.loc.dto.HomeInfoReqDTO;
-import com.example.loc.dto.HomeInfoResDTO;
+import com.example.loc.dto.HomeInfoDTO;
+import com.example.loc.dto.HomeInfoAllDTO;
 import com.example.loc.dto.RegistInfoReqDTO;
+import com.example.loc.repository.LocationImgRepository;
 import com.example.loc.repository.LocationRepository;
 import com.example.loc.repository.MemberRepository;
 
@@ -21,52 +30,79 @@ import lombok.RequiredArgsConstructor;
 public class LocationServiceImple implements LocationService{
 
     private final LocationRepository locationRepository;
+    private final LocationImgRepository locationImgRepository;
+    private final ImgService imgService;
     private final MemberRepository memberRepository;
 
-    // 홈페이지
+    // 홈페이지 송신
     @Override
-    @Transactional // 서버가 송수신하다 갑자기 꺼지는 상태 방지
-    public Long home(HomeInfoReqDTO request, HomeInfoResDTO response) {
-        return null;
+    public List<HomeInfoAllDTO> getHomePageData() {
+        List<HomeInfoDTO> homepageData = locationRepository.findAllByIdNotNull();
+
+        List<HomeInfoAllDTO> homepageAllData = homepageData.stream().map(location ->{
+            String imgUrl = location.getLocationImg() != null ? location.getLocationImg().getImgUrl() : null;
+            String base64Image = null;
+            try {
+                base64Image = imgService.getBase64Image(imgUrl);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            return new HomeInfoAllDTO(location.getId(), location.getName(), location.getComment(), base64Image);
+        }).collect(Collectors.toList());
+        
+        return homepageAllData;
     }
 
     // 등록
-    @Override
-    @Transactional
-    public Long reg(RegistInfoReqDTO regDTO) {
+    public Long regLocation(RegistInfoReqDTO regInfoDTO, MultipartFile imgFile, Member member) throws Exception {
 
-        // 일단, DB에 같은 장소와 Name이 존재하면 안되고
-        if (locationRepository.findByAddrAndName(regDTO.getAddr(),regDTO.getName()).isPresent()) {
-            throw new Error("이미 존재하는 매장입니다.");
-        }
+        // 매장(업소) 등록
+        Location location = regInfoDTO.createLocation(member);
+        locationRepository.save(location);
 
-        // memberID를 통해서 받아온 데이터의 id가 존재하는지 확인하는 것
-        Optional<Member> memberCheck = memberRepository.findById(regDTO.getMemberId());
+        // 이미지 등록
+        LocationImg locationImg = new LocationImg();
+        locationImg.setLocation(location);
+        imgService.saveImg(locationImg, imgFile);
 
-        if (memberCheck.isEmpty()) {
-            // 어짜피 프론트에서 제대로 처리했으면, 이 메시지는 뜨지 않을 것임
-            throw new Error("회원정보가 존재하지 않습니다.");    
-        }
-
-        Member member = memberCheck.get();
-
-        Location location = Location.builder()
-            .name(regDTO.getName())
-            .phone(regDTO.getPhone())
-            .comment(regDTO.getComment())
-            .addr(regDTO.getAddr())
-            .type(regDTO.getType())
-            .member(member)
-            .build();
-
-        Location savedLoc = locationRepository.save(location);
-        return savedLoc.getId();
+        return location.getId();
     }
+
+    
 
     // 삭제
 
     // 수정
+    @Override
+    public void updateLocation(Long locationId, RegistInfoReqDTO updateInfoDTO, MultipartFile imgFile) throws Exception {
+        // 주어진 ID에 해당하는 Location 조회
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+        if (optionalLocation.isPresent()) {
+            Location location = optionalLocation.get();
 
+            // 새로운 정보로 업데이트
+            location.setName(updateInfoDTO.getName());
+            location.setComment(updateInfoDTO.getComment());
+            location.setPhone(updateInfoDTO.getPhone());
+            location.setAddr(updateInfoDTO.getAddr());
+            location.setType(updateInfoDTO.getType());
+
+            // 이미지 업데이트
+            if (imgFile != null) {
+                LocationImg locationImg = location.getLocationImg();
+                if (locationImg == null) {
+                    locationImg = new LocationImg();
+                    locationImg.setLocation(location);
+                }
+                imgService.saveImg(locationImg, imgFile);
+            }
+
+            // DB 저장
+            locationRepository.save(location);
+        } else {
+            throw new RuntimeException("해당 ID에 대한 매장 정보 없음");
+        }
+    }
     // 조회
 
     

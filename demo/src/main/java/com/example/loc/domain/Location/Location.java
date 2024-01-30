@@ -8,6 +8,8 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
+@ToString
 @Table (name="location_info")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
@@ -37,8 +39,11 @@ public class Location {
     @JoinColumn(name = "owner_id")
     private Member member;
 
+    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    private LocationImg locationImg;
+
     @Builder
-    public Location(Long id, String name, String comment, String phone, String addr, Type type, Member member) {
+    public Location(Long id, String name, String comment, String phone, String addr, Type type, byte[] imageFile, Member member) {
         this.id = id;
         this.name = name;
         this.comment = comment;

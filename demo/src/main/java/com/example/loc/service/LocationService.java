@@ -1,20 +1,26 @@
 package com.example.loc.service;
 
-import com.example.loc.dto.HomeInfoReqDTO;
-import com.example.loc.dto.HomeInfoResDTO;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.loc.domain.Member.Member;
+import com.example.loc.dto.HomeInfoDTO;
+import com.example.loc.dto.HomeInfoAllDTO;
 import com.example.loc.dto.RegistInfoReqDTO;
 
 public interface LocationService {
 
-    // 홈페이지 전송 (프론트에서 id 데이터를 보내면, 그에 맞는 정보 출력)
-    Long home(HomeInfoReqDTO reqDTO, HomeInfoResDTO resDTO);
+     
+    // 홈페이지 송신 (프론트에 모든 데이터 전송하기 위해 repo에서 받아오는 객체들)
+    List<HomeInfoAllDTO> getHomePageData();
 
     // 등록
-    Long reg(RegistInfoReqDTO regDTO);
+    Long regLocation(RegistInfoReqDTO regDTO, MultipartFile imgFile, Member member) throws Exception;
 
     // 삭제
 
     // 수정
-
+    void updateLocation(Long locationId, RegistInfoReqDTO updateInfoDTO, MultipartFile imgFile) throws Exception;
     // 조회
 } 
