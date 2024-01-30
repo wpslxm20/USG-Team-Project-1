@@ -1,4 +1,4 @@
-package com.example.loc.dto;
+package com.example.loc.dto.Location;
 
 import jakarta.validation.constraints.NotNull;
 

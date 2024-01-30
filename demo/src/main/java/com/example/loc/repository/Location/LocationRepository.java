@@ -1,11 +1,11 @@
-package com.example.loc.repository;
+package com.example.loc.repository.Location;
 
 import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.loc.domain.Location.Location;
-import com.example.loc.dto.HomeInfoDTO;
+import com.example.loc.dto.Location.HomeInfoDTO;
 
 public interface LocationRepository extends JpaRepository<Location, Long>{
 

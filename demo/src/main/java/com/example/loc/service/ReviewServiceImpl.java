@@ -7,7 +7,7 @@ import com.example.loc.dto.MyReviewDTO;
 import com.example.loc.dto.MyReviewResDTO;
 import com.example.loc.dto.SaveReviewReqDTO;
 import com.example.loc.dto.UpdateReviewReqDTO;
-import com.example.loc.repository.LocationRepository;
+import com.example.loc.repository.Location.LocationRepository;
 import com.example.loc.repository.MemberRepository;
 import com.example.loc.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;

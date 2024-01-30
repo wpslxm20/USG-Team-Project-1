@@ -1,4 +1,4 @@
-package com.example.loc.service;
+package com.example.loc.service.Location;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.loc.domain.Location.LocationImg;
-import com.example.loc.repository.LocationImgRepository;
+import com.example.loc.repository.Location.LocationImgRepository;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
