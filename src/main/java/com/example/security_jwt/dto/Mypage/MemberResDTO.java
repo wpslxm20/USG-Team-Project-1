@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @Builder
-public class MemberModifyResDTO {
+public class MemberResDTO {
     private String nickname;
-    private String password;
     private LocalDateTime birth;
     private Gender gender;
 }

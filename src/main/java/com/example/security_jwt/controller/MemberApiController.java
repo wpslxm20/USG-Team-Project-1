@@ -4,7 +4,8 @@ import com.example.security_jwt.dto.*;
 import com.example.security_jwt.dto.Member.MemberLoginReqDTO;
 import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
-import com.example.security_jwt.dto.Mypage.MemberModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberResDTO;
 import com.example.security_jwt.dto.Mypage.MypageReqDTO;
 import com.example.security_jwt.dto.Mypage.MypageResDTO;
 import com.example.security_jwt.global.mesage.MessageResponse;
@@ -48,12 +49,18 @@ public class MemberApiController {
         return ResponseEntity.ok(new MessageResponse(memberLoginResDTO, "refresh 토큰으로 access 토큰 재발행."));
     }
 
+    @GetMapping("api/member")       //회원 정보 조회
+    @Operation(summary = "회원 정보 조회 *")
+    public ResponseEntity<MessageResponse> GetMember(@RequestBody @Valid MemberReqDTO memberReqDTO) {
+        MemberResDTO resDTO = memberService.GetMember(memberReqDTO);
+        return ResponseEntity.ok(new MessageResponse(resDTO, "회원정보 조회함."));
+    }
 
-    @PutMapping("api/mypage/modify")    //수정
+    @PutMapping("api/member/modify")    //수정
     @Operation(summary = "회원 정보 수정 *")
-    public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid MemberModifyReqDTO memberModifyReqDTO) {
-        memberService.modifyMember(memberModifyReqDTO);
-        return ResponseEntity.ok(new MessageResponse(memberModifyReqDTO,"회원정보가 수정되었습니다."));
+    public ResponseEntity<MessageResponse> mypage(@RequestBody @Valid MemberReqDTO memberReqDTO) {
+        memberService.modifyMember(memberReqDTO);
+        return ResponseEntity.ok(new MessageResponse(memberReqDTO,"회원정보가 수정되었습니다."));
     }
 
     @GetMapping("api/mypage/like")      //관심목록

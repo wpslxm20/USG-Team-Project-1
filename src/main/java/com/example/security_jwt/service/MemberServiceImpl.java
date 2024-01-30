@@ -5,7 +5,8 @@ import com.example.security_jwt.domain.Mypage.Mypage;
 import com.example.security_jwt.dto.*;
 import com.example.security_jwt.dto.Member.MemberLoginResDTO;
 import com.example.security_jwt.dto.Member.MemberSignUpReqDTO;
-import com.example.security_jwt.dto.Mypage.MemberModifyReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberReqDTO;
+import com.example.security_jwt.dto.Mypage.MemberResDTO;
 import com.example.security_jwt.dto.Mypage.MypageReqDTO;
 import com.example.security_jwt.dto.Mypage.MypageResDTO;
 import com.example.security_jwt.repository.MypageRepository;
@@ -20,7 +21,6 @@ import com.example.security_jwt.domain.Member.Member;
 import com.example.security_jwt.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,26 +121,37 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void modifyMember(MemberModifyReqDTO memberModifyReqDTO){
-        Member findMember = memberRepository.findByEmail(memberModifyReqDTO.getEmail()).orElseThrow(
+    public void modifyMember(MemberReqDTO memberReqDTO){
+        Member findMember = memberRepository.findByEmail(memberReqDTO.getEmail()).orElseThrow(
                 () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
         );
 
-        if (memberModifyReqDTO.getNickname() != null) {
-            findMember.ModifyNickName(memberModifyReqDTO.getNickname());
+        if (memberReqDTO.getNickname() != null) {
+            findMember.ModifyNickName(memberReqDTO.getNickname());
         }
-        if (memberModifyReqDTO.getPassword() != null) {
-            findMember.ModifyPassword(passwordEncoder.encode(memberModifyReqDTO.getPassword()));
+        if (memberReqDTO.getPassword() != null) {
+            findMember.ModifyPassword(passwordEncoder.encode(memberReqDTO.getPassword()));
         }
-        if (memberModifyReqDTO.getGender() != null){
-            findMember.ModifyGender(memberModifyReqDTO.getGender());
+        if (memberReqDTO.getGender() != null){
+            findMember.ModifyGender(memberReqDTO.getGender());
         }
-        if (memberModifyReqDTO.getBirth() != null){
-            findMember.ModifyBirth(memberModifyReqDTO.getBirth());
+        if (memberReqDTO.getBirth() != null){
+            findMember.ModifyBirth(memberReqDTO.getBirth());
         }
         // 기타 필드들에 대한 업데이트 로직 추가...
 
         memberRepository.save(findMember);
+    }
+    @Override
+    public MemberResDTO GetMember(MemberReqDTO memberReqDTO){
+        Member findMember = memberRepository.findByEmail(memberReqDTO.getEmail()).orElseThrow(
+                () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
+        );
+        return MemberResDTO.builder()
+                .nickname(findMember.getNickname())
+                .birth(findMember.getBirth())
+                .gender(findMember.getGender())
+                .build();
     }
     @Override
     public List<MypageResDTO> GetReview(MypageReqDTO reqDTO){
@@ -184,6 +195,7 @@ public class MemberServiceImpl implements MemberService{
                     .date(mypage.getDate())
                     .type(mypage.getType())
                     .build();
+            resDTOs.add(resDTO);
         }
         return resDTOs;
     }
