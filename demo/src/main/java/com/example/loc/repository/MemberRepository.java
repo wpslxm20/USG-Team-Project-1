@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
+
+    // Id(Unique) -> 하나의 Member만 반환
+    Optional<Member> findById(Long id);
 }
