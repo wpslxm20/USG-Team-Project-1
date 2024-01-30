@@ -1,8 +1,15 @@
 import styled from "styled-components";
+import {useNavigate} from "react-router";
 
 const StoreItem = (props) => {
+    const navigate = useNavigate();
+    const detailClick = () => {
+        // 클릭 시 해당 상점의 상세 페이지로 이동합니다.(props설정해서 id값 전달하는 방향으로 나중에 코드 수정)
+        //navigate(`/detail/${props.reg_id}`);
+        navigate("/detail");
+      };
     return (
-        <StoreContainer>
+        <StoreContainer onClick={detailClick}> 
             <StoreImg />
             <TextContainer>
                 <StoreNameTxt>{props.name}</StoreNameTxt>
