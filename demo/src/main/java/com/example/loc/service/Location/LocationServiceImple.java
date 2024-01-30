@@ -1,4 +1,4 @@
-package com.example.loc.service;
+package com.example.loc.service.Location;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,11 +14,11 @@ import org.yaml.snakeyaml.util.ArrayUtils;
 import com.example.loc.domain.Location.Location;
 import com.example.loc.domain.Location.LocationImg;
 import com.example.loc.domain.Member.Member;
-import com.example.loc.dto.HomeInfoDTO;
-import com.example.loc.dto.HomeInfoAllDTO;
-import com.example.loc.dto.RegistInfoReqDTO;
-import com.example.loc.repository.LocationImgRepository;
-import com.example.loc.repository.LocationRepository;
+import com.example.loc.dto.Location.HomeInfoDTO;
+import com.example.loc.dto.Location.HomeInfoAllDTO;
+import com.example.loc.dto.Location.RegistInfoReqDTO;
+import com.example.loc.repository.Location.LocationImgRepository;
+import com.example.loc.repository.Location.LocationRepository;
 import com.example.loc.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;

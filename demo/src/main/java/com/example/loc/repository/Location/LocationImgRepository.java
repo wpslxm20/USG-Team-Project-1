@@ -1,4 +1,4 @@
-package com.example.loc.repository;
+package com.example.loc.repository.Location;
 
 import java.util.Optional;
 

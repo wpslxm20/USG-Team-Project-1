@@ -1,13 +1,13 @@
-package com.example.loc.service;
+package com.example.loc.service.Location;
 
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.loc.domain.Member.Member;
-import com.example.loc.dto.HomeInfoDTO;
-import com.example.loc.dto.HomeInfoAllDTO;
-import com.example.loc.dto.RegistInfoReqDTO;
+import com.example.loc.dto.Location.HomeInfoDTO;
+import com.example.loc.dto.Location.HomeInfoAllDTO;
+import com.example.loc.dto.Location.RegistInfoReqDTO;
 
 public interface LocationService {
 

@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.loc.domain.Member.Member;
-import com.example.loc.dto.HomeInfoAllDTO;
-import com.example.loc.dto.HomeInfoDTO;
-import com.example.loc.dto.RegistInfoReqDTO;
+import com.example.loc.dto.Location.HomeInfoAllDTO;
+import com.example.loc.dto.Location.HomeInfoDTO;
+import com.example.loc.dto.Location.RegistInfoReqDTO;
 import com.example.loc.global.message.MessageResponse;
-import com.example.loc.repository.LocationRepository;
+import com.example.loc.repository.Location.LocationRepository;
 import com.example.loc.repository.MemberRepository;
-import com.example.loc.service.LocationService;
+import com.example.loc.service.Location.LocationService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,7 @@ public class LocationController {
     private final LocationRepository locationRepository;
     private final MemberRepository memberRepository;
     
+    @Operation(summary = "홈페이지 필요한 데이터 송신")
     @PostMapping("/home") // 홈페이지에 필요한 데이터 송신
     public ResponseEntity<MessageResponse> getHomePageData() {
         List<HomeInfoAllDTO> homePageData = locationService.getHomePageData();
@@ -51,7 +53,7 @@ public class LocationController {
         return ResponseEntity.ok(response);
     }
     
-
+    @Operation(summary = "매장 등록")
     @PostMapping("/reg") // 매장 등록
     public ResponseEntity<MessageResponse> locationNew(@Valid @ModelAttribute RegistInfoReqDTO registInfoReqDTO, BindingResult bindingResult, @RequestParam("imgFile") MultipartFile imgFile) {
         MessageResponse<List<HomeInfoDTO>> response = new MessageResponse<>("에러 발생");
@@ -77,7 +79,7 @@ public class LocationController {
         return ResponseEntity.ok(response);
     }
 
-    // 수정
+    @Operation(summary = "매장 수정")
     @PutMapping("/update/{locationId}")
     public ResponseEntity<MessageResponse> updateLocation (
         @PathVariable Long locationId,

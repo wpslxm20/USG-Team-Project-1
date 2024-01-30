@@ -1,4 +1,4 @@
-package com.example.loc.service;
+package com.example.loc.service.Location;
 
 import java.io.File;
 import java.io.FileOutputStream;
