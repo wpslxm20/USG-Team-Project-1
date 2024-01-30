@@ -14,6 +14,12 @@ const Header = () => {
                     <li>
                         <Link to="/signup">회원가입</Link>
                     </li>
+                    <li>
+                        <Link to="/register">매장(업소)등록</Link>
+                    </li>
+                    <li>
+                        <Link to="/update">매장(업소)수정</Link>
+                    </li>
                 </ul>
             </nav>
         </header>

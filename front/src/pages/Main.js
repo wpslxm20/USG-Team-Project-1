@@ -10,6 +10,7 @@ const Main = () => {
       try {
         const response = await axios.post('http://localhost:8081/api/location/home'); 
         const result = response.data;
+        console.log(result);
         setData(result.data); // 데이터를 상태에 설정
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,7 +35,7 @@ const Main = () => {
         <TableCell>Name</TableCell>
         <TableCell>ID</TableCell>
         <TableCell>Comment</TableCell>
-        <TableCell>Additional Cell</TableCell>
+        <TableCell>Image</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -43,12 +44,19 @@ const Main = () => {
           <TableCell>{item.name}</TableCell>
           <TableCell>{item.id}</TableCell>
           <TableCell>{item.comment || 'No comment'}</TableCell>
-          <TableCell>Additional Data</TableCell>
+          <TableCell>
+            {/* 이미지 표시 */}
+            {item.imgUrl ? (
+              <img src={`data:image/jpeg;base64, ${item.imgUrl}`} alt={'Image for ${item.name}'} style={{ maxHeight: '300px'}} />
+            ) : (
+              'No image available'
+            )}
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>
   </Table>
   );
-} 
+}
 
 export default Main;
