@@ -23,12 +23,12 @@ const StoresByType = (props) => {
                         if (props.selectedInfoType === null) {
                             if (store.info_type === props.type && count < maxItems) {
                                 count++;
-                                return <StoreItem key={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
+                                return <StoreItem key={store.reg_id} reg_id={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
                             }
                         }
                         else {
                             if (store.info_type === props.type) {
-                                return <StoreItem key={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
+                                return <StoreItem key={store.reg_id} reg_id={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
                             }
                         }
                     } else {
@@ -36,12 +36,12 @@ const StoresByType = (props) => {
                             if (props.selectedInfoType === null) {
                                 if (store.info_type === props.type && count < maxItems) {
                                     count++;
-                                    return <StoreItem key={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
+                                    return <StoreItem key={store.reg_id} reg_id={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
                                 }
                             }
                             else {
                                 if (store.info_type === props.type) {
-                                    return <StoreItem key={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
+                                    return <StoreItem key={store.reg_id} reg_id={store.reg_id} img="" name={store.nickname} rating={store.rating}/>
                                 }
                             }
                         }

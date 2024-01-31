@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import PopupWithInput from './PopupWithInput';
 import styled from 'styled-components';
 import './DetailPage.css';
+
 const styles = {
   table: {
     width: '100%',
@@ -18,6 +19,9 @@ const styles = {
 };
 
 export default function DetailPage() {
+  const location = useLocation();
+  const reg_id = location.state.reg_id;
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] =  useState(false);
   const Star = ({ selected, starSize }) => (
@@ -71,7 +75,7 @@ export default function DetailPage() {
   }, []);
 
   const fetchData = () => {
-    fetch("http://localhost:3001/detailpage")
+    fetch("http://localhost:3001/detailpage/")
       .then(res => res.json())
       .then(data => setData(data))
       .catch(error => console.error("Error fetching data:", error));
