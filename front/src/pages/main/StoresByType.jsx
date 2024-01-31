@@ -2,10 +2,20 @@ import styled from "styled-components";
 import StoreItem from "./StoreItem";
 import dummydata from "../../assets/data/dummydata.json";
 import MoreStoresBtnImgUrl from "../../assets/image/ic_more_stores.png"
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
 const StoresByType = (props) => {
     const maxItems = 4; // 한 줄에 보여줄 아이템의 최대 갯수
     let count = 0; // 현재 렌더링된 아이템의 갯수
+    const [stores, setStores] = useState(dummydata);
+
+    // useEffect(() => {
+    //     axios.get('/api/')
+    //         .then((res) => {
+    //             setStores(res.data);
+    //         })
+    // }, []);
 
     return (
         <StoresByTypeContainer>
@@ -18,7 +28,7 @@ const StoresByType = (props) => {
                 
             </StoreByTypeTopContainer>
             <StoreItemContainer>
-                {dummydata.map((store, index) => {
+                {stores.map((store, index) => {
                     if (props.selectedCityOrDistrict === null) {
                         if (props.selectedInfoType === null) {
                             if (store.info_type === props.type && count < maxItems) {
