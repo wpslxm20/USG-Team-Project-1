@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/main/Home';
 import Header from './pages/main/Header';
-import Login from './pages/user/LoginPage';
+import Login from './Auth/SignInPage';
 import Logout from './pages/user/LogoutPage';
-import SignUp from './pages/user/SignUpPage';
+import SignUp from './Auth/SignUpPage';
 import Detail from './pages/detail/DetailPage';
 
 import C_InterestPlace from './pages/customer/C_InterestPlace';
