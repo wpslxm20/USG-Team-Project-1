@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useRef } from 'react';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 import styled from 'styled-components';
 function PopupWithInput({ onReviewAdded }) {
 

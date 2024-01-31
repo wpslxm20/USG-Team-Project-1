@@ -40,7 +40,7 @@ function Sidebar() {
           <tbody>
             <tr>
               <td style={{ ...style.tableCell, paddingTop: '10px' }}>
-                <Link to="/mainpage" style={style.link}>메인페이지</Link>
+                <Link to="/" style={style.link}>메인페이지</Link>
               </td>
             </tr>
             <tr>
@@ -50,12 +50,18 @@ function Sidebar() {
             </tr>
             <tr>
               <td style={style.tableCell}>
-                <Link to="/registerpage" style={style.link}>업소 등록하기</Link>
+                <Link to="/signin" style={style.link}>로그인</Link>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td style={style.tableCell}>
+                <Link to="/register" style={style.link}>업소 등록하기</Link>
               </td>
             </tr>
             <tr>
               <td style={style.tableCell}>
-                <Link to="/modifypage" style={style.link}>업소 수정하기</Link>
+                <Link to="/registerupdate" style={style.link}>업소 수정하기</Link>
               </td>
             </tr>
           </tbody>

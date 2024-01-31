@@ -30,7 +30,7 @@ function Headerbar() {
           </li>
           <li style={{ marginRight: '10px' }}> | </li>
           <li style={{ marginRight: '10px' }}>
-            <Link to="/login">로그인</Link>
+            <Link to="/mypage">마이페이지</Link>
           </li>
           <li style={{ marginRight: '10px' }}> | </li>
           <li>

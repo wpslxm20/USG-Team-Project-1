@@ -4,6 +4,11 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Home from './pages/main/Home';
 import DetailPage from './pages/detail/DetailPage';
+import SignInPage from './Auth/SignInPage';
+import SignUpPage from './Auth/SignUpPage';
+import Register from './pages/store/Register';
+import RegisterUpdate from './pages/store/RegisterUpdate';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   return (
@@ -26,9 +31,13 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/detail" element={<DetailPage />} />
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="signup" element={<SignUpPage />} />
+          <Route path="register" element={<Register />} />
+          <Route path="registerupdate" element={<RegisterUpdate />} />
         </Routes>
       </div>
     </Router>
