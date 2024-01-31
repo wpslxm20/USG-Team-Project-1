@@ -23,21 +23,21 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
-    @PostMapping("api/signup") //회원가입
+    @PostMapping("api/member/signup") //회원가입
     @Operation(summary = "회원 가입")
     public ResponseEntity<MessageResponse> signup(@RequestBody @Valid MemberSignUpReqDTO request){
         memberService.join(request);
         return ResponseEntity.ok(new MessageResponse("회원가입 완료."));
     }
 
-    @PostMapping("api/login")  //로그인
+    @PostMapping("api/member/login")  //로그인
     @Operation(summary = "회원가입")
     public ResponseEntity<MessageResponse> login(@RequestBody MemberLoginReqDTO loginReqDTO){
         MemberLoginResDTO memberLoginResDTO = memberService.login(loginReqDTO.getEmail(), loginReqDTO.getPassword());
         return ResponseEntity.ok(new MessageResponse(memberLoginResDTO,"로그인 완료됨"));
     }
 
-    @PostMapping("api/resissue")   //refresh 토큰 요청
+    @PostMapping("api/member/resissue")   //refresh 토큰 요청
     @Operation(summary = "토큰 재발행")
     public ResponseEntity<MessageResponse> regenerateToken(@RequestBody RefreshTokenReq refreshTokenReq){
         MemberLoginResDTO memberLoginResDTO = memberService.regenerateToken(refreshTokenReq);

@@ -4,6 +4,7 @@ import com.example.security_jwt.domain.Member.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -15,5 +16,5 @@ public class MemberReqDTO {
     private String nickname;
     private LocalDateTime birth;
     private Gender gender;
-
+    private MultipartFile image; //!!!!!!!!!이미지 업로드 관련 부분
 }
