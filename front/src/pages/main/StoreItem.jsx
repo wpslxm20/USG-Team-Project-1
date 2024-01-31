@@ -10,9 +10,21 @@ const StoreItem = (props) => {
         navigate('/detail', { state: { reg_id: props.reg_id } });
     }
 
+    // const byteCharacters = atob(props.img);
+    // const byteNumbers = new Array(byteCharacters.length);
+    // for (let i = 0; i < byteCharacters.length; i++) {
+    //     byteNumbers[i] = byteCharacters.charCodeAt(i);
+    // }
+    // const byteArray = new Uint8Array(byteNumbers);
+
+    // let image = new Blob([byteArray], { type: 'image/jpeg' });
+    // let imageUrl = URL.createObjectURL(image);
+    // this.setState({image: imageUrl});
+
     return (
         <StoreContainer onClick={goToStoreDetail}>
-            <StoreImg />
+            {/* <StoreImg src={this.state.image}/> */}
+            <StoreImg src={`data:image/jpeg;base64,${props.img}`}/>
             <TextContainer>
                 <StoreNameTxt>{props.name}</StoreNameTxt>
                 <StoreRatingTxt>{props.rating}</StoreRatingTxt>
