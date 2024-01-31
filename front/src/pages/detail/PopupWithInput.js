@@ -26,13 +26,6 @@ const [selectedFile, setSelectedFile] = useState(null);
   };
 
 
-useEffect(() => {
-    fetch("http://localhost:3001/detailpage")
-      .then(res => res.json())
-      .then(data => setData(data))
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
-
   async function onSubmit(e) {
     e.preventDefault();
   
@@ -40,18 +33,14 @@ useEffect(() => {
       setIsLoading(true);
   
       try {
-        const updatedData = { ...data }; // 데이터 복사
   
         // 새 리뷰 데이터 생성
         const newReview = {
-          id: updatedData[0].review.length + 1,
+          id: 1,
           email: 'abc@abcd',
           detail: detailRef.current.value,
           grade: rating,
         }; 
-  
-        // 리뷰를 데이터에 추가
-        updatedData[0].review.push(newReview);
   
         // 이미지를 선택한 경우에만 처리
         if (selectedFile) {
@@ -63,12 +52,12 @@ useEffect(() => {
         }
   
         // 서버에 JSON 데이터 전송
-        const response = await fetch(`http://localhost:3001/detailpage/${updatedData[0].id}`, {
-          method: 'PUT',
+        const response = await fetch("http://localhost:3001/reviews", {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(updatedData[0]),
+          body: JSON.stringify(newReview),
         });
   
         if (response.ok) {
@@ -176,7 +165,7 @@ useEffect(() => {
         contentLabel="Popup with Input"
         style={customStyles}
       >
-        <h2>리뷰 작성하기{data.id}</h2>
+        <h2>리뷰 작성하기</h2>
         <div style={customStyles.inputContainer}>
           <textarea
             value={inputValue}

@@ -101,10 +101,10 @@ export default function DetailPage() {
           <div>
             <h1>{item.name}</h1>
             <button onClick={handleClick}>+ 관심장소</button>
-            <p>({item.group})</p>
-            <p>연락처: {item.contact}</p>
-            <p>주소: {item.address}</p>
-            <p>{item.detail}</p>
+            <p>({item.type})</p>
+            <p>연락처: {item.phone}</p>
+            <p>주소: {item.addr}</p>
+            <p>{item.comment}</p>
             <p>평점: {item.averagegrade}</p>
           </div>
           </div>
