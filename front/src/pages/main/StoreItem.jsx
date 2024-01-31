@@ -1,4 +1,17 @@
 import styled from "styled-components";
+<<<<<<< HEAD
+import { useNavigate } from "react-router-dom";
+
+const StoreItem = (props) => {
+    const navigate = useNavigate();
+
+    const goToStoreDetail = () => {
+        navigate('/detail');
+    }
+
+    return (
+        <StoreContainer onClick={goToStoreDetail}>
+=======
 import {useNavigate} from "react-router";
 
 const StoreItem = (props) => {
@@ -10,6 +23,7 @@ const StoreItem = (props) => {
       };
     return (
         <StoreContainer onClick={detailClick}> 
+>>>>>>> 128d9bd03d10447019707619b5cb6b688bf37dfe
             <StoreImg />
             <TextContainer>
                 <StoreNameTxt>{props.name}</StoreNameTxt>
