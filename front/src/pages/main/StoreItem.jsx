@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StoreItem = (props) => {
     const navigate = useNavigate();
-// 클릭 시 해당 상점의 상세 페이지로 이동합니다.(props설정해서 id값 전달하는 방향으로 나중에 코드 수정)
+    // 클릭 시 해당 상점의 상세 페이지로 이동합니다.(props설정해서 id값 전달하는 방향으로 나중에 코드 수정)
         //navigate(`/detail/${props.reg_id}`);
     const goToStoreDetail = () => {
-        navigate('/detail');
+        navigate('/detail', { state: { reg_id: props.reg_id } });
     }
 
     return (
