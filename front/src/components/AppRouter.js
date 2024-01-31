@@ -13,6 +13,7 @@ const AppRouter = (props) => {
     let dec = base64.decode(payload)
   }
   const accessToken = localStorage.getItem('acessToken');
+  
   if (accessToken !== null) {
     const decodedToken = decodingToken(accessToken);
   }
