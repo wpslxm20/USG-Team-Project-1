@@ -52,19 +52,19 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createAccessToken(String userid, Role role) {
+    public String createAccessToken(String email, Role role) {
         Map<String, Object> claim = new HashMap<>();
         claim.put("role", role.name()); // 사용자 Role
-        claim.put("userid", userid);  //사용자 ID
+        claim.put("email", email);  //사용자 ID
         return createJwt("ACCESS_TOKEN", ACCESS_TOKEN_EXPIRATION_TIME, claim);
     }
     @Override
-    public String createRefreshToken(String userid, Role role){
+    public String createRefreshToken(String email, Role role){
         HashMap<String, Object> claim = new HashMap<>();
         claim.put("role", role);
-        claim.put("userid", userid);
+        claim.put("email", email);
         String refreshToken = createJwt("REFRESH_TOKEN", REFRESH_TOKEN_EXPIRATION_TIME, claim);
-        saveRefreshTokenInRedis(userid, refreshToken);
+        saveRefreshTokenInRedis(email, refreshToken);
         return refreshToken;
     }
 
@@ -88,9 +88,9 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public void saveRefreshTokenInRedis(String userid, String refreshToken) {
+    public void saveRefreshTokenInRedis(String email, String refreshToken) {
         redisTemplate.opsForValue().set(
-                userid,
+                email,
                 refreshToken,
                 REFRESH_TOKEN_EXPIRATION_TIME,
                 TimeUnit.MILLISECONDS

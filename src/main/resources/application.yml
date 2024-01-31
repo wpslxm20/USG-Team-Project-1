@@ -15,10 +15,16 @@ spring:
         default_batch_fetch_size: 1000
     hibernate:
       ddl-auto: create
-
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: ${LOCATION}
+        project-id: ${PROJECT_ID}
+        bucket: ${BUCKET}
 # 포트 변경
 server:
-  port: 8082
+  port: 9091
 
 # jwt.secret.key의 값은 256bit 이상이어야 합니다.
 jwt:

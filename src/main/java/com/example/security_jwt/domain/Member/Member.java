@@ -2,19 +2,12 @@ package com.example.security_jwt.domain.Member;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
 import lombok.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 @Getter
-@Table (name="member")
+@Table (name="member3")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
@@ -22,25 +15,26 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="member_nickname", nullable = false, unique =true)
+    @Column(name="nickname", nullable = false, unique =true)
     private String nickname;
 
-    @Column(name="member_email", nullable = false, unique =true)
+    @Column(name="email", nullable = false, unique =true)
     private String email;
 
-    @Column(name="member_password", nullable = false)
+    @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="member_birth", nullable = false)
+    @Column(name="birth", nullable = false)
     private LocalDateTime birth;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="member_role")
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="member_gender")
     private Gender gender;
+
+    @Column(name="image")
+    private String image; // Google Cloud Storage에 저장된 이미지 파일 이름
 
     @Builder
     public Member(String nickname, String email, String password, LocalDateTime birth, Role role, Gender gender) {
