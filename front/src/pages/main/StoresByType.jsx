@@ -8,17 +8,18 @@ import axios from "axios";
 const StoresByType = (props) => {
     const maxItems = 4; // 한 줄에 보여줄 아이템의 최대 갯수
     let count = 0; // 현재 렌더링된 아이템의 갯수
-    const [stores, setStores] = useState(dummydata);
+    const [stores, setStores] = useState(null);
 
-    useEffect(() => {
-        axios.get('/api/')
-            .then((res) => {
-                setStores(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, []);
+    const getStore = async (e) => {
+        getStore()
+        .then((response) => {
+            setStores(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    getStore();
 
     return (
         <StoresByTypeContainer>
