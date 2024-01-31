@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Layout/LoginPage.css'; // 로그인 페이지 스타일 파일 경로
+import '../../Layout/LoginPage.css'; // 로그인 페이지 스타일 파일 경로
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 
