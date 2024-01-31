@@ -10,12 +10,15 @@ const StoresByType = (props) => {
     let count = 0; // 현재 렌더링된 아이템의 갯수
     const [stores, setStores] = useState(dummydata);
 
-    // useEffect(() => {
-    //     axios.get('/api/')
-    //         .then((res) => {
-    //             setStores(res.data);
-    //         })
-    // }, []);
+    useEffect(() => {
+        axios.get('/api/')
+            .then((res) => {
+                setStores(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
 
     return (
         <StoresByTypeContainer>
