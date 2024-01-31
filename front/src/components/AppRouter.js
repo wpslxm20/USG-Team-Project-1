@@ -33,7 +33,7 @@ const AppRouter = (props) => {
           </li>
           <li style={{ marginRight: '10px' }}> | </li>
           <li style={{ marginRight: '10px' }}>
-            <Link to="/InterestPlace">마이페이지</Link>
+            <Link to="/O_InterestPlace">마이페이지</Link>
           </li>
           <li style={{ marginRight: '10px' }}> | </li>
           <li>
