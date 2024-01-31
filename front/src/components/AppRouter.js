@@ -3,17 +3,27 @@ import React from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import base64 from 'base-64';
+import { useState } from "react";
 // import jwt from 'jsonwebtoken';
 
 const AppRouter = (props) => {
+  const [isOwner, setIsOwner] = useState(false);
 
   // token 처리
   const decodingToken = (token) => {
     let payload = token.substring(token.indexOf('.')+1,token.lastIndexOf('.'));
     let dec = base64.decode(payload)
+    // checkIsOwner(dec.role);
   }
+
+  const checkIsOwner = (role) => {
+    if (role === "OWNER") {
+      setIsOwner(true);
+    }
+  }
+
   const accessToken = localStorage.getItem('acessToken');
-  
+
   if (accessToken !== null) {
     const decodedToken = decodingToken(accessToken);
   }
@@ -50,6 +60,9 @@ const AppRouter = (props) => {
               <li style={{ marginRight: '10px' }}>
                 <Link to="/" onClick={handleHomeClick}>Home</Link>
               </li>
+              {
+                
+              }
               <li style={{ marginRight: '10px' }}> | </li>
               <li style={{ marginRight: '10px' }}>
                 <Link to="/O_InterestPlace">마이페이지</Link>
