@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useRef } from 'react';
 import Modal from 'react-modal'
 import styled from 'styled-components';
-function PopupWithInput1({ onReviewAdded }) {
+function PopupWithInpu({ onReviewAdded }) {
 
 const [data, setData] = useState([]);
 const [isLoading, setIsLoading] =  useState(false);
@@ -204,4 +204,4 @@ useEffect(() => {
     </div>
   );
 }
-export default PopupWithInput1;
+export default PopupWithInpu;
