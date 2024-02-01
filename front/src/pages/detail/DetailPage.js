@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import PopupWithInput from './PopupWithInput';
+import PopupWithInput1 from './PopupWithInput1';
 import styled from 'styled-components';
 import './DetailPage.css';
 
@@ -111,7 +111,7 @@ export default function DetailPage() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
   <h3 style={{ marginRight: '1rem' }}>리뷰 ({item.review.length}개)</h3>
   <div style={{ marginLeft: 'auto' }}>
-    <PopupWithInput onReviewAdded={handleReviewAdded} />
+    <PopupWithInput1 onReviewAdded={handleReviewAdded} />
   </div>
 </div>
 <div style={{ paddingTop: '5px' }}>
