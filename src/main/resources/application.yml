@@ -7,7 +7,7 @@ spring:
     url: ${DATABASE_URL}
     username: ${DATABASE_ID}
     password: ${DATABASE_PASSWORD}
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     properties:
@@ -19,7 +19,7 @@ spring:
     gcp:
       storage:
         credentials:
-          location: ${LOCATION}
+          location: classpath:${LOCATION}
         project-id: ${PROJECT_ID}
         bucket: ${BUCKET}
 # 포트 변경
